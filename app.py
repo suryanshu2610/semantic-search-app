@@ -6,17 +6,25 @@ from sentence_transformers import SentenceTransformer
 import re
 
 # ----------------- Load data and model -----------------
-df = pd.read_csv("patent_data1.csv")
-embeddings = np.load("embeddings1.npy")
+df = pd.read_csv("patent_data.csv")
 
+# 🛠️ Fill NaN values in relevant columns to avoid TypeErrors
+df['title'] = df['title'].fillna("")
+df['abstract'] = df['abstract'].fillna("")
+
+embeddings = np.load("embeddings.npy")
 dimension = embeddings.shape[1]
+
 index = faiss.IndexFlatL2(dimension)
 index.add(embeddings)
 
-model = SentenceTransformer('all-MiniLM-L6-v2')
+model = SentenceTransformer('all-MiniLM-L6-v2', device='cpu')
 
 # ----------------- Helper function -----------------
 def get_matching_sentences(text, query):
+    if not isinstance(text, str):  # 🛡️ Defensive check
+        return []
+    
     sentences = re.split(r'(?<=[.!?]) +', text)
     query_words = set(word.lower() for word in query.split())
     
