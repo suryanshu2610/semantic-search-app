@@ -6,8 +6,8 @@ from sentence_transformers import SentenceTransformer
 import re
 
 # ----------------- Load data and model -----------------
-df = pd.read_csv("patent_data.csv")
-embeddings = np.load("embeddings.npy")
+df = pd.read_csv("patent_data1.csv")
+embeddings = np.load("embeddings1.npy")
 
 dimension = embeddings.shape[1]
 index = faiss.IndexFlatL2(dimension)
