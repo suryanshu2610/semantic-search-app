@@ -18,7 +18,7 @@ dimension = embeddings.shape[1]
 index = faiss.IndexFlatL2(dimension)
 index.add(embeddings)
 
-model = SentenceTransformer('all-MiniLM-L6-v2', device='cpu')
+model = SentenceTransformer('all-MiniLM-L6-v2')
 
 # ----------------- Helper function -----------------
 def get_matching_sentences(text, query):
